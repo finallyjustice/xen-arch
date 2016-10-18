@@ -4,11 +4,8 @@ PDFFILE=xen-arch.pdf
 all: pdf
 
 pdf: ${SRCFILE}
-	latex xen-arch.tex
-	latex xen-arch.tex
-	dvips -f -Pcmz xen-arch.dvi -o xen-arch.ps 
-	ps2pdf xen-arch.ps
-#xelatex ${SRCFILE}
+	pdflatex xen-arch.tex
+	pdflatex xen-arch.tex
 
 open: ${PDFFILE}
 	gnome-open ${PDFFILE}

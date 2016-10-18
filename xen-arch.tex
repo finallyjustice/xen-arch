@@ -100,32 +100,74 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 
 %------------------------------------------------
 
+\section{Title}
 \begin{frame}
 \titlepage % Print the title page as the first slide
 \end{frame}
 
 %------------------------------------------------
 
+\section{What is virtualization}
 \begin{frame}
 \frametitle{What is virtualization}
+A virtual machine is taken to be an efficient, isolated duplicate of the real machine. (Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
 \begin{itemize}
-\item A virtual machine is taken to be an efficient, isolated duplicate of the real machine. (Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
-\item \textbf{efficient}: capable of producing desired results without wasting materials, time, or energy \pause
+\item \textbf{efficient}: capable of producing desired results without wasting materials, time, or \textcolor<3->{red}{energy}\pause \pause
 \item \textbf{isolated}: separate from others; happening in different places and at different times
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
+\section{Trap and Emulate}
 \begin{frame}
-\frametitle{Virtualization Types}
+\frametitle{Trap and Emulate}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/trapemu.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Virtualization Categories}
+\begin{frame}
+\frametitle{Virtualization Categories}
 \begin{itemize}
-\item Hardware-assisted Virtualization
-\item Paravirtualization
-\item Binary Translation
-\item Emulator
+\item Instruction Emulator (QEMU, Bochs) \pause
+\item Paravirtualization (Xen) \pause
+\item Hardware-assisted Virtualization (KVM, Xen, VMware) \pause
+\item OS-level Virtualization (Linux Container) \pause
+\item Programming Language Virtualization (Java, .NET CLR) \pause
+\item Library Virtualization (Wine, Cygwin)
 \end{itemize}
 \end{frame}
+
+%------------------------------------------------
+
+\section {What is Xen}
+\begin{frame}
+\frametitle{What is Xen}
+\begin{block}{Wikipedia}
+Xen Project is a hypervisor using a microkernel design, providing services that allow multiple computer operating systems to execute on the same computer hardware concurrently.
+\end{block} \pause
+\begin{block}{SOSP 2003: Xen and the Art of Virtualization}
+This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality.
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Xen Framework}
+\begin{frame}
+\frametitle{Xen Framework}
+\begin{itemize}
+\item xenstore
+\end{itemize}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/xen.pdf}
+\end{figure}
+\end{frame}
+
 
 %------------------------------------------------
 
@@ -168,25 +210,38 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \begin{frame}
 \frametitle{Xen Device Virtualization}
 \begin{itemize}
-\item HVM emulated device
-\item PV drivers
-\item Device Passthrough
-\item Virtual Function (VF)
+\item HVM emulated legacy device (QEMU) \pause
+\item \textbf<5->{\textcolor<5->{red}{Paravirtual (PV) drivers}} \pause
+\item Device Passthrough (vt-d) \pause
+\item Virtual Function (vt-d) \pause
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
+\section{PV driver vs. PCI driver}
 \begin{frame}
 \frametitle{PV driver vs. PCI driver}
-\begin{itemize}
-\item shared memory
-\item device discovery (and config space)
-\item device management
-\item DMA
-\item interrupt
-\end{itemize}
+\begin{table}
+\small
+\begin{tabular}{l l l}
+\toprule
+& \textbf{PCI driver} & \textbf{PV driver}\\
+\midrule
+device abstraction & pci\_device, pci\_driver & xenbus\_device, xenbus\_driver \\
+device discovery & PCI Tree & Xenstore \\
+device configuration & PCI Config Space (IO/MMIO) & Xenstore \\
+data flow & DMA Ring Buffer & Memory Ring Buffer \\
+shared memory & IOMMU & Grant Table \\
+interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
+\bottomrule
+\end{tabular}
+\end{table}
+\begin{figure}
+\includegraphics[height=0.3\linewidth]{figures/trapemu.pdf}
+\end{figure}
 \end{frame}
+
 
 %------------------------------------------------
 
@@ -208,6 +263,38 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 
 %------------------------------------------------
 
+\begin{frame}
+\frametitle{Xen driver and device}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\frametitle{Xenbus}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\frametitle{I/O ring buffer}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\frametitle{Event Channel}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\frametitle{PV driver from scratch}
+\end{frame}
+
+%------------------------------------------------
+
+
+
+
+
+
+
 
 
 
@@ -223,75 +310,8 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
 \end{frame}
 
-%----------------------------------------------------------------------------------------
-%	PRESENTATION SLIDES
-%----------------------------------------------------------------------------------------
-
-%------------------------------------------------
-\section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
-%------------------------------------------------
 
 
-\begin{frame}
-\frametitle{test1}
-\begin{itemize}
-\item Statement
-\pause
-\item Explanation
-\pause
-\item Example
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{test2}
-\begin{block}{Block 1}
-this is block 1
-\end{block}
-\begin{block}{Block 2}
-this is block 2
-\end{block}
-\end{frame}
-
-\subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-
-\begin{frame}
-\frametitle{Paragraphs of Text}
-Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
-
-Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Bullet Points}
-\begin{itemize}
-\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-\item Nam cursus est eget velit posuere pellentesque
-\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-\end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Blocks of Highlighted Text}
-\begin{block}{Block 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-\end{block}
-
-\begin{block}{Block 2}
-Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-\end{block}
-
-\begin{block}{Block 3}
-Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-\end{block}
-\end{frame}
 
 %------------------------------------------------
 
@@ -335,59 +355,6 @@ Treatment 3 & 0.0009271 & 0.296 \\
 
 %------------------------------------------------
 
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Verbatim}
-\begin{example}[Theorem Slide Code]
-\begin{verbatim}
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}\end{verbatim}
-\end{example}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Figure}
-Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-%\begin{figure}
-%\includegraphics[width=0.8\linewidth]{test}
-%\end{figure}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Citation}
-An example of the \verb|\cite| command to cite within the presentation:\\~
-
-This statement requires citation \cite{p1}.
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
-\end{frame}
 
 %------------------------------------------------
 
