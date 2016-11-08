@@ -41,7 +41,7 @@
 %\usetheme{Ilmenau}
 %\usetheme{JuanLesPins}
 %\usetheme{Luebeck}
-%\usetheme{Madrid}
+\usetheme{Madrid}
 %\usetheme{Malmoe}
 %\usetheme{Marburg}
 %\usetheme{Montpellier}
@@ -59,7 +59,7 @@
 %\usecolortheme{albatross}
 %\usecolortheme{beaver}
 %\usecolortheme{beetle}
-\usecolortheme{crane}
+%\usecolortheme{crane}
 %\usecolortheme{dolphin}
 %\usecolortheme{dove}
 %\usecolortheme{fly}
@@ -129,9 +129,29 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 
 %------------------------------------------------
 
-\section{Virtualization Categories}
+\section{Hardware Virtualization (vt-x)}
 \begin{frame}
-\frametitle{Virtualization Categories}
+\frametitle{Hardware Virtualization (vt-x)}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/vmx.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\section{KVM (Kernel-based Virtual Machine)}
+\begin{frame}
+\frametitle{KVM (Kernel-based Virtual Machine)}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/kvm.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\section{State of the Art Virtualization}
+\begin{frame}
+\frametitle{State of the Art Virtualization}
 \begin{itemize}
 \item Instruction Emulator (QEMU, Bochs) \pause
 \item Paravirtualization (Xen) \pause
@@ -160,25 +180,18 @@ This paper presents Xen, an x86 virtual machine monitor which allows multiple co
 \section{Xen Framework}
 \begin{frame}
 \frametitle{Xen Framework}
-\begin{itemize}
-\item xenstore
-\end{itemize}
 \begin{figure}
 \includegraphics[width=1.0\linewidth]{figures/xen.pdf}
 \end{figure}
-\end{frame}
-
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Xen vs. KVM}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
 \frametitle{PV, HVM or PVHVM}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/spectrum.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
@@ -304,17 +317,6 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 
 
 
-
-\begin{frame}
-\frametitle{Overview} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{frame}
-
-
-
-
-%------------------------------------------------
-
 \begin{frame}
 \frametitle{Multiple Columns}
 \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
@@ -333,30 +335,19 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ul
 \end{columns}
 \end{frame}
 
-%------------------------------------------------
-\section{Second Section}
+
 %------------------------------------------------
 
+\section{Take-Home Message}
 \begin{frame}
-\frametitle{Table}
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+\frametitle{Take-Home Message}
+\begin{itemize}
+\item What is virtualization
+\item Paravirtualization and Hardware-assisted Virtualization
+\item Xen vs. KVM
+\item Grant Table, Event Channel, Paravirtual Drivers
+\end{itemize}
 \end{frame}
-
-%------------------------------------------------
-
-
-%------------------------------------------------
 
 \begin{frame}
 \Huge{\centerline{The End}}
