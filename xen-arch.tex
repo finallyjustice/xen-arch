@@ -129,9 +129,9 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 
 %------------------------------------------------
 
-\section{Hardware Virtualization (vt-x)}
+\section{Hardware Virtualization (Intel VT)}
 \begin{frame}
-\frametitle{Hardware Virtualization (vt-x)}
+\frametitle{Hardware Virtualization (Intel VT)}
 \begin{figure}
 \includegraphics[width=1.0\linewidth]{figures/vmx.pdf}
 \end{figure}
@@ -142,9 +142,22 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 \section{KVM (Kernel-based Virtual Machine)}
 \begin{frame}
 \frametitle{KVM (Kernel-based Virtual Machine)}
+\begin{columns}[c]
+\column{.5\textwidth}
+\begin{center}
+\begin{itemize}
+\item CPU hardware virtualization extensions (Intel VT or AMD-V)
+\item Loadable kernel module (kvm.ko, kvm-intel.ko/kvm-amd.ko)
+\item QEMU as userspace emulator
+\end{itemize}
+\end{center}
+\column{.5\textwidth}
+\begin{center}
 \begin{figure}
 \includegraphics[width=1.0\linewidth]{figures/kvm.pdf}
 \end{figure}
+\end{center}
+\end{columns}
 \end{frame}
 
 %------------------------------------------------
