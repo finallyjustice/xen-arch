@@ -184,7 +184,10 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 Xen Project is a hypervisor using a microkernel design, providing services that allow multiple computer operating systems to execute on the same computer hardware concurrently.
 \end{block} \pause
 \begin{block}{SOSP 2003: Xen and the Art of Virtualization}
-This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality.
+This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality. \pause
+\end{block}
+\begin{block}{Basic Idea of Paravirtualization}
+Actively tell the hypervisor what the guest is going to do
 \end{block}
 \end{frame}
 
@@ -203,7 +206,7 @@ This paper presents Xen, an x86 virtual machine monitor which allows multiple co
 \begin{frame}
 \frametitle{PV, HVM or PVHVM}
 \begin{figure}
-\includegraphics[width=1.0\linewidth]{figures/spectrum.pdf}
+\includegraphics[width=0.8\linewidth]{figures/spectrum.pdf}
 \end{figure}
 \end{frame}
 
@@ -263,91 +266,85 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \bottomrule
 \end{tabular}
 \end{table}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Xenstore/Xenbus}
+\begin{frame}
+\frametitle{Xenstore/Xenbus}
 \begin{figure}
-\includegraphics[height=0.3\linewidth]{figures/trapemu.pdf}
+\includegraphics[width=1.0\linewidth]{figures/xenstore.pdf}
 \end{figure}
 \end{frame}
 
-
 %------------------------------------------------
 
+\section{Grant Table}
 \begin{frame}
 \frametitle{Grant Table}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/grant.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
 
+\section{I/O Ring Buffer}
 \begin{frame}
-\frametitle{Xenstore}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Xenbus}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Xen driver and device}
-\end{frame}
-
-%------------------------------------------------
-\begin{frame}
-\frametitle{Xenbus}
-\end{frame}
-
-%------------------------------------------------
-\begin{frame}
-\frametitle{I/O ring buffer}
-\end{frame}
-
-%------------------------------------------------
-\begin{frame}
-\frametitle{Event Channel}
-\end{frame}
-
-%------------------------------------------------
-\begin{frame}
-\frametitle{PV driver from scratch}
-\end{frame}
-
-%------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\begin{frame}
-\frametitle{Multiple Columns}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
-\textbf{Heading}
-\begin{enumerate}
-\item Statement
-\item Explanation
-\item Example
-\end{enumerate}
-
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
+\frametitle{I/O Ring Buffer}
+\begin{columns}[c]
+\column{.6\textwidth}
+\begin{center}
+\begin{itemize}
+\item Usually put grant ref (not data) in ring
+\item Grant ref of ring pages are shared via xenstore
+\item Usually one ring buffer for each device queue
+\item One or more pages for each ring
+\item Producer and Consumer (barrier)
+\end{itemize}
+\end{center}
+\column{.4\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/ring.pdf}
+\end{figure}
+\end{center}
 \end{columns}
 \end{frame}
 
+%------------------------------------------------
+
+\section{Event Channel}
+\begin{frame}
+\frametitle{Event Channel}
+\begin{block}{Registration}
+\begin{itemize}
+\item PVM registers event channel handler to Xen via 
+
+register\_callback(CALLBACKTYPE\_event, xen\_hypervisor\_callback)
+
+\item PVHVM sets HYPERVISOR\_CALLBACK\_VECTOR via
+
+HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
+\end{itemize}
+\end{block}
+\begin{block}{Types}
+\begin{itemize}
+\item Interdomain Event
+\item Virtual IRQ Event
+\item Physical IRQ Event
+\item IPI Event
+\end{itemize}
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\section{PV driver from scratch}
+\begin{frame}
+\frametitle{PV driver from scratch}
+\end{frame}
 
 %------------------------------------------------
 
@@ -362,9 +359,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ul
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\Huge{\centerline{The End}}
-\end{frame}
+%\begin{frame}
+%\Huge{\centerline{The End}}
+%\end{frame}
 
 %----------------------------------------------------------------------------------------
 

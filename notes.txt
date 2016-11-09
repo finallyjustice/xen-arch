@@ -1,9 +1,0 @@
-What is virtualization
-
-Trap and Emulate
-
-Hardware virtualization
-
-Virtualization Categories
-
-What is Xen
