@@ -226,8 +226,39 @@ Actively tell the hypervisor what the guest is going to do
 
 %------------------------------------------------
 
+\section{Xen Interrupt Virtualization: Event Channel 1/2}
 \begin{frame}
-\frametitle{Xen Interrupt Virtualization}
+\frametitle{Xen Interrupt Virtualization: Event Channel 1/2}
+\begin{block}{Event Channel Types}
+\begin{itemize}
+\item Interdomain Event
+\item Virtual IRQ Event
+\item Physical IRQ Event
+\item IPI Event
+\end{itemize}
+\end{block}
+\begin{block}{Registration}
+\begin{itemize}
+\item PVM registers event channel handler to Xen via 
+
+register\_callback(CALLBACKTYPE\_event, xen\_hypervisor\_callback)
+
+\item PVHVM sets HYPERVISOR\_CALLBACK\_VECTOR via
+
+HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\section{Xen Interrupt Virtualization: Event Channel 2/2}
+\begin{frame}
+\frametitle{Xen Interrupt Virtualization: Event Channel 2/2}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/evtchn.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
@@ -323,35 +354,20 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 
 %------------------------------------------------
 
-\section{Event Channel}
+\section{PV driver from scratch}
 \begin{frame}
-\frametitle{Event Channel}
-\begin{block}{Registration}
-\begin{itemize}
-\item PVM registers event channel handler to Xen via 
-
-register\_callback(CALLBACKTYPE\_event, xen\_hypervisor\_callback)
-
-\item PVHVM sets HYPERVISOR\_CALLBACK\_VECTOR via
-
-HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
-\end{itemize}
-\end{block}
-\begin{block}{Types}
-\begin{itemize}
-\item Interdomain Event
-\item Virtual IRQ Event
-\item Physical IRQ Event
-\item IPI Event
-\end{itemize}
-\end{block}
+\frametitle{PV driver from scratch}
 \end{frame}
 
 %------------------------------------------------
 
-\section{PV driver from scratch}
+\section {Reference}
 \begin{frame}
-\frametitle{PV driver from scratch}
+\frametitle{Reference}
+\begin{block}{Publications}
+\end{block}
+\begin{block}{Links}
+\end{block}
 \end{frame}
 
 %------------------------------------------------
