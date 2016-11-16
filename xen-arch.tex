@@ -112,7 +112,7 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \frametitle{What is virtualization}
 A virtual machine is taken to be an efficient, isolated duplicate of the real machine. (Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
 \begin{itemize}
-\item \textbf{efficient}: capable of producing desired results without wasting materials, time, or \textcolor<3->{red}{energy}\pause \pause
+\item \textbf{efficient}: capable of producing desired results without wasting materials, time, or \textbf<3->{\textcolor<3->{red}{energy}}\pause \pause
 \item \textbf{isolated}: separate from others; happening in different places and at different times \pause
 \end{itemize}
 \begin{center}
@@ -209,7 +209,7 @@ Actively tell the hypervisor what the guest is going to do
 \item scheduling, memory management, interrupt and device control
 \item per-domain and per-vcpu info management
 \end{itemize}
-\end{block}
+\end{block} \pause
 \begin{block}{dom0 (host): priviliged su}
 \begin{itemize}
 \item xm/xend/xl (libxc)
@@ -218,7 +218,7 @@ Actively tell the hypervisor what the guest is going to do
 \item qemu and paravirtual driver backend
 \item native device driver
 \end{itemize}
-\end{block}
+\end{block} \pause
 \begin{block}{domU (guest): non-privileged user}
 \begin{itemize}
 \item paravirtual driver frontend
@@ -249,6 +249,14 @@ Actively tell the hypervisor what the guest is going to do
 
 \begin{frame}
 \frametitle{Xen CPU Virtualization}
+\begin{itemize}
+\item vcpu $ \approx $ task\_struct
+\item domain $ \approx $ container or process group
+\item xen schedules vcpu
+\end{itemize}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/cpu.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
@@ -381,9 +389,26 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 
 %------------------------------------------------
 
-\section{PV driver from scratch}
+\section{Selected Xen Projects}
 \begin{frame}
-\frametitle{PV driver from scratch}
+\frametitle{Selected Xen Projects}
+\begin{columns}[c]
+\column{.7\textwidth}
+\begin{itemize}
+\item COLO - Coarse Grain Lock Stepping
+\item LivePatch
+\item Stealthy monitoring with Xen altp2m
+\item Real-Time-Deferrable-Server(RTDS) CPU Scheduler
+\item Windows PV Receive Side Scaling
+\item More at Xen Summit and xen-devel
+\end{itemize}
+\column{.3\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.8\linewidth]{figures/projects.pdf}
+\end{figure}
+\end{center}
+\end{columns}
 \end{frame}
 
 %------------------------------------------------
@@ -392,8 +417,19 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \begin{frame}
 \frametitle{Reference}
 \begin{block}{Publications}
+\begin{itemize}
+\item Xen and the art of virtualization. Paul Barham, Boris Dragovic, Keir Fraser, Steven Hand, Tim Harris, Alex Ho, Rolf Neugebauer, Ian Pratt, and Andrew Warfield. SOSP 2003
+\item The Definitive Guide to the Xen Hypervisor. David Chisnall. 2007
+\item Intel 64 and IA-32 Architectures Software Developer Manuals
+\item Various system \& security research paper and presentation
+\end{itemize}
 \end{block}
-\begin{block}{Links}
+\begin{block}{Miscellaneous}
+\begin{itemize}
+\item Xen Project Developer Summit
+\item https://blog.xenproject.org
+\item https://github.com/finallyjustice/JOS-vmx
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -402,12 +438,22 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \section{Take-Home Message}
 \begin{frame}
 \frametitle{Take-Home Message}
+\begin{columns}[c]
+\column{.7\textwidth}
 \begin{itemize}
 \item What is virtualization
 \item Paravirtualization and Hardware-assisted Virtualization
 \item Xen vs. KVM
 \item Grant Table, Event Channel, Paravirtual Drivers
 \end{itemize}
+\column{.3\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.8\linewidth]{figures/home.pdf}
+\end{figure}
+\end{center}
+
+\end{columns}
 \end{frame}
 
 %\begin{frame}
