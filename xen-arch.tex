@@ -201,9 +201,36 @@ Actively tell the hypervisor what the guest is going to do
 
 %------------------------------------------------
 
-\section{Xen Framework}
+\section{Xen Framework 1/2}
 \begin{frame}
-\frametitle{Xen Framework}
+\frametitle{Xen Framework 1/2}
+\begin{block}{xen hypervisor: dictator}
+\begin{itemize}
+\item scheduling, memory management, interrupt and device control
+\item per-domain and per-vcpu info management
+\end{itemize}
+\end{block}
+\begin{block}{dom0 (host): priviliged su}
+\begin{itemize}
+\item xm/xend/xl (libxc)
+\item pygrub/hvmloader
+\item xenstored
+\item qemu and paravirtual driver backend
+\item native device driver
+\end{itemize}
+\end{block}
+\begin{block}{domU (guest): non-privileged user}
+\begin{itemize}
+\item paravirtual driver frontend
+\end{itemize}
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Xen Framework 2/2}
+\begin{frame}
+\frametitle{Xen Framework 2/2}
 \begin{figure}
 \includegraphics[width=1.0\linewidth]{figures/xen.pdf}
 \end{figure}
