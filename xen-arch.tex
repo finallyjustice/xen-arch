@@ -173,14 +173,21 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 \section{State of the Art Virtualization}
 \begin{frame}
 \frametitle{State of the Art Virtualization}
+\begin{columns}[c]
+\column{.68\textwidth}
 \begin{itemize}
-\item Instruction Emulator (QEMU, Bochs) \pause
-\item Paravirtualization (Xen) \pause
-\item Hardware-assisted Virtualization (KVM, Xen, VMware) \pause
-\item OS-level Virtualization (Linux Container) \pause
-\item Programming Language Virtualization (Java, .NET CLR) \pause
-\item Library Virtualization (Wine, Cygwin)
+\visible<1->{\item Instruction Emulator (QEMU, Bochs)}
+\visible<2->{\item Paravirtualization (Xen)}
+\visible<3->{\item Hardware-assisted Virtualization (KVM, Xen, VMware)}
+\visible<4->{\item OS-level Virtualization (Linux Container)}
+\visible<5->{\item Programming Language Virtualization (Java, .NET CLR)}
+\visible<6->{\item Library Virtualization (Wine, Cygwin)}
 \end{itemize}
+\column{.32\textwidth}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/virtlist.pdf}
+\end{figure}
+\end{columns}
 \end{frame}
 
 %------------------------------------------------
@@ -189,7 +196,7 @@ A virtual machine is taken to be an efficient, isolated duplicate of the real ma
 \begin{frame}
 \frametitle{What is Xen}
 \begin{block}{Wikipedia}
-Xen Project is a hypervisor using a microkernel design, providing services that allow multiple computer operating systems to execute on the same computer hardware concurrently.
+Xen Project is a hypervisor using a \textbf{\textcolor{red}{microkernel}} design, providing services that allow multiple computer operating systems to execute on the same computer hardware concurrently.
 \end{block} \pause
 \begin{block}{SOSP 2003: Xen and the Art of Virtualization}
 This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality. \pause
@@ -312,12 +319,19 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 
 \begin{frame}
 \frametitle{Xen Device Virtualization}
+\begin{columns}[c]
+\column{.6\textwidth}
 \begin{itemize}
-\item HVM emulated legacy device (QEMU) \pause
-\item \textbf<5->{\textcolor<5->{red}{Paravirtual (PV) drivers}} \pause
-\item Device Passthrough (vt-d) \pause
-\item Virtual Function (vt-d) \pause
+\visible<1->{\item HVM emulated legacy device (QEMU)}
+\visible<2->{\item \textbf<5->{\textcolor<5->{red}{Paravirtual (PV) drivers}}}
+\visible<3->{\item Device Passthrough (vt-d)}
+\visible<4->{\item Virtual Function (vt-d)}
 \end{itemize}
+\column{.4\textwidth}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/device.pdf}
+\end{figure}
+\end{columns}
 \end{frame}
 
 %------------------------------------------------
@@ -326,20 +340,22 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 \begin{frame}
 \frametitle{PV driver vs. PCI driver}
 \begin{table}
-\small
 \begin{tabular}{l l l}
 \toprule
 & \textbf{PCI driver} & \textbf{PV driver}\\
 \midrule
-device abstraction & pci\_device, pci\_driver & xenbus\_device, xenbus\_driver \\
-device discovery & PCI Tree & Xenstore \\
-device configuration & PCI Config Space (IO/MMIO) & Xenstore \\
-data flow & DMA Ring Buffer & Memory Ring Buffer \\
-shared memory & IOMMU & Grant Table \\
-interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
+\textbf{device abstraction} & \textcolor{blue}{pci\_device, pci\_driver} & \textcolor{red}{xenbus\_device, xenbus\_driver} \\
+\textbf{device discovery} & \textcolor{blue}{PCI Tree} & \textcolor{red}{Xenstore} \\
+\textbf{device configuration} & \textcolor{blue}{PCI Config Space (IO/MMIO)} & \textcolor{red}{Xenstore} \\
+\textbf{data flow} & \textcolor{blue}{DMA Ring Buffer} & \textcolor{red}{Memory Ring Buffer} \\
+\textbf{shared memory} & \textcolor{blue}{N/A or IOMMU} & \textcolor{red}{Grant Table} \\
+\textbf{interrupt} & \textcolor{blue}{IOAPIC, MSI, MSI-X} & \textcolor{red}{Event Channel} \\
 \bottomrule
 \end{tabular}
 \end{table}
+\begin{figure}
+\includegraphics[width=.24\linewidth]{figures/fight.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
@@ -395,12 +411,12 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \begin{columns}[c]
 \column{.7\textwidth}
 \begin{itemize}
-\item COLO - Coarse Grain Lock Stepping
-\item LivePatch
-\item Stealthy monitoring with Xen altp2m
-\item Real-Time-Deferrable-Server(RTDS) CPU Scheduler
-\item Windows PV Receive Side Scaling
-\item More at Xen Summit and xen-devel
+\visible<1->{\item COLO - Coarse Grain Lock Stepping}
+\visible<2->{\item LivePatch}
+\visible<3->{\item Stealthy monitoring with Xen altp2m}
+\visible<4->{\item Real-Time-Deferrable-Server(RTDS) CPU Scheduler}
+\visible<5->{\item Windows PV Receive Side Scaling}
+\visible<6->{\item More at Xen Summit and xen-devel}
 \end{itemize}
 \column{.3\textwidth}
 \begin{center}
@@ -441,10 +457,10 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \begin{columns}[c]
 \column{.7\textwidth}
 \begin{itemize}
-\item What is virtualization
-\item Paravirtualization and Hardware-assisted Virtualization
-\item Xen vs. KVM
-\item Grant Table, Event Channel, Paravirtual Drivers
+\visible<1->{\item What is virtualization}
+\visible<2->{\item Paravirtualization and Hardware-assisted Virtualization}
+\visible<3->{\item Xen vs. KVM}
+\visible<4->{\item Grant Table, Event Channel, Paravirtual Drivers}
 \end{itemize}
 \column{.3\textwidth}
 \begin{center}
@@ -452,7 +468,6 @@ interrupt & IOAPIC, MSI, MSI-X & Event Channel \\
 \includegraphics[width=.8\linewidth]{figures/home.pdf}
 \end{figure}
 \end{center}
-
 \end{columns}
 \end{frame}
 
