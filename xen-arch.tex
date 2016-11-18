@@ -217,7 +217,7 @@ Actively tell the hypervisor what the guest is going to do
 \item per-domain and per-vcpu info management
 \end{itemize}
 \end{block} \pause
-\begin{block}{dom0 (host): priviliged su}
+\begin{block}{dom0 (host): privileged admin}
 \begin{itemize}
 \item xm/xend/xl (libxc)
 \item pygrub/hvmloader
@@ -306,13 +306,13 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Xen Timer Virtualization}
+\frametitle{Xen Memory Virtualization}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Xen Memory Virtualization}
+\frametitle{Xen Timer Virtualization}
 \end{frame}
 
 %------------------------------------------------
@@ -344,12 +344,12 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 \toprule
 & \textbf{PCI driver} & \textbf{PV driver}\\
 \midrule
-\textbf{device abstraction} & \textcolor{blue}{pci\_device, pci\_driver} & \textcolor{red}{xenbus\_device, xenbus\_driver} \\
-\textbf{device discovery} & \textcolor{blue}{PCI Tree} & \textcolor{red}{Xenstore} \\
-\textbf{device configuration} & \textcolor{blue}{PCI Config Space (IO/MMIO)} & \textcolor{red}{Xenstore} \\
-\textbf{data flow} & \textcolor{blue}{DMA Ring Buffer} & \textcolor{red}{Memory Ring Buffer} \\
-\textbf{shared memory} & \textcolor{blue}{N/A or IOMMU} & \textcolor{red}{Grant Table} \\
-\textbf{interrupt} & \textcolor{blue}{IOAPIC, MSI, MSI-X} & \textcolor{red}{Event Channel} \\
+\textbf{device abstraction} & \textcolor{blue}{pci\_device, pci\_driver} & \visible<2->{\textcolor{red}{xenbus\_device, xenbus\_driver}} \\
+\textbf{device discovery} & \textcolor{blue}{PCI Tree} & \visible<3->{\textcolor{red}{Xenstore}} \\
+\textbf{device configuration} & \textcolor{blue}{PCI Config Space (IO/MMIO)} & \visible<4->{\textcolor{red}{Xenstore}} \\
+\textbf{data flow} & \textcolor{blue}{DMA Ring Buffer} & \visible<5->{\textcolor{red}{Memory Ring Buffer}} \\
+\textbf{shared memory} & \textcolor{blue}{N/A or IOMMU} & \visible<6->{\textcolor{red}{Grant Table}} \\
+\textbf{interrupt} & \textcolor{blue}{IOAPIC, MSI, MSI-X} & \visible<7->{\textcolor{red}{Event Channel}} \\
 \bottomrule
 \end{tabular}
 \end{table}
