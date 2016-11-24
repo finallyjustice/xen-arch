@@ -110,17 +110,21 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \section{What is virtualization}
 \begin{frame}
 \frametitle{What is virtualization}
-A virtual machine is taken to be an efficient, isolated duplicate of the real machine. (Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
 \begin{itemize}
-\item \textbf{efficient}: capable of producing desired results without wasting materials, time, or \textbf<3->{\textcolor<3->{red}{energy}}\pause \pause
-\item \textbf{isolated}: separate from others; happening in different places and at different times \pause
+\item A virtual machine is taken to be an efficient, isolated duplicate of the real machine
+(Formal Requirements for Virtualizable Third Generation Architectures, Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
+\item Virtualizable Architecture: all \textbf{sensitive instructions} must also be privileged instructions
+	\begin{itemize}
+		\item Privileged instructions
+		\item Control sensitive instructions
+		\item Behavior sensitive instructions
+	\end{itemize}
 \end{itemize}
+\pause
 \begin{center}
 \begin{figure}
-%\begin{subfigure}{.5\textwidth}
 \includegraphics[width=0.3\linewidth]{figures/sparc.pdf}
 \includegraphics[width=0.2\linewidth]{figures/power.pdf}
-%\end{subfigure}
 \end{figure}
 \end{center}
 \end{frame}
@@ -245,6 +249,25 @@ Actively tell the hypervisor what the guest is going to do
 
 %------------------------------------------------
 
+\section {Convert Linux to Paravirtual Dom0/DomU}
+\begin{frame}
+\frametitle{Convert Linux to Paravirtual Dom0/DomU}
+\begin{itemize}
+\item ELF notes (Linux) or \_\_xen\_guest section (MiniOS) in kernel image
+\item Enable xen features in .config when building kernel
+\end{itemize}
+\begin{center}
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{figures/elfnote.pdf}
+\vspace{10 mm}
+\includegraphics[width=0.4\linewidth]{figures/config.pdf}
+\end{figure}
+\end{center}
+
+\end{frame}
+
+%------------------------------------------------
+
 \begin{frame}
 \frametitle{PV, HVM or PVHVM}
 \begin{figure}
@@ -305,14 +328,16 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 
 %------------------------------------------------
 
+\section{Xen Memory Virtualization}
 \begin{frame}
 \frametitle{Xen Memory Virtualization}
 \end{frame}
 
 %------------------------------------------------
 
+\section{Xen Scheduling (credit2)}
 \begin{frame}
-\frametitle{Xen Timer Virtualization}
+\frametitle{Xen Scheduling (credit2)}
 \end{frame}
 
 %------------------------------------------------
