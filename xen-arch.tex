@@ -85,7 +85,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Xen Overview]{Xen Virtualization Overview} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[Xen is not just paravirtualization]{Xen is not just paravirtualization} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{Dongli Zhang} % Your name
 \institute[Oracle] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -112,15 +112,8 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \frametitle{What is virtualization}
 \begin{itemize}
 \item A virtual machine is taken to be an efficient, isolated duplicate of the real machine
-(Formal Requirements for Virtualizable Third Generation Architectures, Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
-\item Virtualizable Architecture: all \textbf{sensitive instructions} must also be privileged instructions
-	\begin{itemize}
-		\item Privileged instructions
-		\item Control sensitive instructions
-		\item Behavior sensitive instructions
-	\end{itemize}
+(by Formal Requirements for Virtualizable Third Generation Architectures, Gerald J.Popek and Rebert P. Goldberg, 1974) \pause
 \end{itemize}
-\pause
 \begin{center}
 \begin{figure}
 \includegraphics[width=0.3\linewidth]{figures/sparc.pdf}
@@ -134,18 +127,64 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \section{Trap and Emulate}
 \begin{frame}
 \frametitle{Trap and Emulate}
+\begin{itemize}
+\item Virtual Machine (Guest) at \textbf{Unprivileged Mode}
+\item Virtual Machine Monitor (Host or Hypervisor) at \textbf{Priviledged Mode}
+\end{itemize}
 \begin{figure}
-\includegraphics[width=1.0\linewidth]{figures/trapemu.pdf}
+\includegraphics[width=0.8\linewidth]{figures/trapemu.pdf}
 \end{figure}
 \end{frame}
 
 %------------------------------------------------
 
-\section{Hardware Virtualization (Intel VT)}
+\section{x86 is NOT virtualizable}
 \begin{frame}
-\frametitle{Hardware Virtualization (Intel VT)}
+\frametitle{x86 is NOT virtualizable}
+\begin{itemize}
+\item Virtualizable Architecture: all \textbf{sensitive instructions} must also be \textbf{privileged instructions} (by Gerald J.Popek and Rebert P)
+\item \textbf{\textcolor{red}{critical instructions}} = $sensitive \ instructions - privileged \ instructions$ \pause
+\item 18 critical instructions on x86 (Analysis of the Intel Pentium's Ability to Support a Secure Virtual Machine Monitor. USENIX Security 2000):
+	\begin{itemize}
+		\item \textit{SGDT/SIDT/SLDT, SMSW, PUSHF/POPF}
+		\item \textit{LAR/LSL, VERR/VERW, POP/PUSH}
+		\item \textit{CALL, JMP, INT n, RET}
+		\item \textit{STR, MOV}
+	\end{itemize}
+\pause
+\item Solutions:
+	\begin{itemize}
+		\item Binary Translation (QEMU, VMWare)
+		\item Paravirtualization (Xen)
+		\item Hardware-Assisted Virtualization (Xen, KVM, VMWare based on Intel-VT and AMD-V)
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\section{Solution 1/3: Binary Translation}
+\begin{frame}
+\frametitle{Solution 1/3: Binary Translation}
+\begin{itemize}
+\item \textbf{philosophy: rewrite critical instructions}
+\end{itemize}
 \begin{figure}
-\includegraphics[width=1.0\linewidth]{figures/vmx.pdf}
+\includegraphics[width=1.0\linewidth]{figures/qemu.pdf}
+\end{figure}
+\end{frame}
+
+
+%------------------------------------------------
+
+\section{Solution 2/3: Hardware Virtualization (Intel VT)}
+\begin{frame}
+\frametitle{Solution 2/3: Hardware Virtualization (Intel VT)}
+\begin{itemize}
+\item \textbf{philosophy: instroduce new privileged mode}
+\end{itemize}
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{figures/vmx.pdf}
 \end{figure}
 \end{frame}
 
@@ -174,13 +213,32 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 
 %------------------------------------------------
 
+\section{Solution 3/3: Paravirtualization}
+\begin{frame}
+\frametitle{Solution 3/3: Paravirtualization}
+\begin{itemize}
+\item \textbf{philosophy: replace critical instructions with hypercalls}
+\end{itemize}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/vmx.pdf}
+\end{figure}
+\end{frame}
+
+%Programs use syscall to enter the kernel, and the kernel is using syscall to
+%enter xen. since you can only configure one entry point at a time (and both xen
+%and applications run in ring 3 anyway), xen is handling all syscalls, then
+%checks the context it was issued from, and forwards the call to to the guest
+%kernel if it was user code.
+
+%------------------------------------------------
+
 \section{State of the Art Virtualization}
 \begin{frame}
 \frametitle{State of the Art Virtualization}
 \begin{columns}[c]
 \column{.68\textwidth}
 \begin{itemize}
-\visible<1->{\item Instruction Emulator (QEMU, Bochs)}
+\visible<1->{\item Binary Translation (QEMU, Bochs, VMWare)}
 \visible<2->{\item Paravirtualization (Xen)}
 \visible<3->{\item Hardware-assisted Virtualization (KVM, Xen, VMware)}
 \visible<4->{\item OS-level Virtualization (Linux Container)}
@@ -429,6 +487,17 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 \end{frame}
 
 %------------------------------------------------
+
+\section{Xen Paravirtual Networking Framework}
+\begin{frame}
+\frametitle{Xen Paravirtual Networking Framework}
+\begin{figure}
+\includegraphics[width=0.6\linewidth]{figures/xennet.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
 
 \section{Selected Xen Projects}
 \begin{frame}
