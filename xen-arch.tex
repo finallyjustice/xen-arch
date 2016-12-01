@@ -107,6 +107,22 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 
 %------------------------------------------------
 
+\section{Plan}
+\begin{frame}
+\frametitle{Plan}
+\begin{itemize}
+\setlength\itemsep{1em}
+\item {\large Virtualization}
+\item {\large Xen Virtualization}
+\end{itemize}
+\pause
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/plan.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+
 \section{What is virtualization}
 \begin{frame}
 \frametitle{What is virtualization}
@@ -218,9 +234,15 @@ Oracle Asia Research and Development Centers (Beijing) \\ % Your institution for
 \frametitle{Solution 3/3: Paravirtualization}
 \begin{itemize}
 \item \textbf{philosophy: replace critical instructions with hypercalls}
+\item A hypercall is a software trap from a domain to the hypervisor, just as a syscall is a software trap from an application to the kernel
+	\begin{itemize}
+		\item x86\_32: \textit{int 0x82} 
+		\item x86\_64: \textit{syscall instruction}
+		\item x86 Intel-VT \textit{vmcall instruction}
+	\end{itemize}
 \end{itemize}
 \begin{figure}
-\includegraphics[width=1.0\linewidth]{figures/vmx.pdf}
+\includegraphics[width=1.0\linewidth]{figures/hypercall.pdf}
 \end{figure}
 \end{frame}
 
@@ -264,7 +286,7 @@ Xen Project is a hypervisor using a \textbf{\textcolor{red}{microkernel}} design
 This paper presents Xen, an x86 virtual machine monitor which allows multiple commodity operating systems to share conventional hardware in a safe and resource managed fashion, but without sacrificing either performance or functionality. \pause
 \end{block}
 \begin{block}{Basic Idea of Paravirtualization}
-Actively tell the hypervisor what the guest is going to do
+Actively inform the hypervisor with the action guest is going to taken via hypercall
 \end{block}
 \end{frame}
 
@@ -273,7 +295,7 @@ Actively tell the hypervisor what the guest is going to do
 \section{Xen Framework 1/2}
 \begin{frame}
 \frametitle{Xen Framework 1/2}
-\begin{block}{xen hypervisor: dictator}
+\begin{block}{xen hypervisor (microkernel): dictator}
 \begin{itemize}
 \item scheduling, memory management, interrupt and device control
 \item per-domain and per-vcpu info management
@@ -386,17 +408,47 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 
 %------------------------------------------------
 
-\section{Xen Memory Virtualization}
+\section{Xen Memory Virtualization 1/2}
 \begin{frame}
-\frametitle{Xen Memory Virtualization}
+\frametitle{Xen Memory Virtualization 1/2}
+\begin{itemize}
+\item Address Types
+	\begin{itemize}
+		\item GVA (Guest Virtual Address)
+		\item GPA (Guest Physical Address) or GFN (Guest page Frame Number)
+		\item HPA (Host Physical Address) or MFN (Machine page Frame Number)
+	\end{itemize}
+\item \textbf{\textcolor{red}{Hardware-assisted Memory Virtualization}} (Method 1/3): Second-Level Page Table
+	\begin{itemize}
+		\item: Intel: Extended Page Table (EPT)
+		\item: AMD: Nested Page Table (NPT)
+	\end{itemize}
+\end{itemize}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/ept.pdf}
+\end{figure}
 \end{frame}
 
 %------------------------------------------------
 
-\section{Xen Scheduling (credit2)}
+\section{Xen Memory Virtualization 2/2}
 \begin{frame}
-\frametitle{Xen Scheduling (credit2)}
+\frametitle{Xen Memory Virtualization 2/2}
+\begin{itemize}
+\item \textbf{\textcolor{red}{Direct Paging}} (Method 2/3): guest manage the (GVA, HPA) page table directly
+\item \textbf{\textcolor{red}{Shadow Paging}} (Method 3/3): xen hypervisor maintains a shadow (GVA, HPA) page table which is not awared by guest
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/shadow.pdf}
+\end{figure}
+\end{itemize}
 \end{frame}
+
+%------------------------------------------------
+
+%\section{Xen Scheduling (credit2)}
+%\begin{frame}
+%\frametitle{Xen Scheduling (credit2)}
+%\end{frame}
 
 %------------------------------------------------
 
@@ -498,6 +550,15 @@ HYPERVISOR\_hvm\_op(HVMOP\_set\_param, \&a)
 
 %------------------------------------------------
 
+\section{VM Creation Workflow}
+\begin{frame}
+\frametitle{VM Creation Workflow}
+\begin{figure}
+\includegraphics[width=1.0\linewidth]{figures/boot.pdf}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
 
 \section{Selected Xen Projects}
 \begin{frame}
